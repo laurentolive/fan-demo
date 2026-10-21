@@ -64,19 +64,19 @@
             "Id": "ee3f7549-75df-40b5-925f-213420f58ded",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "ee3f7549-75df-40b5-925f-213420f58ded",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 300
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 300,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -110,19 +110,19 @@
             "Id": "a2707d6f-5955-4043-89e3-a288a57ea860",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "a2707d6f-5955-4043-89e3-a288a57ea860",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 300
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 300,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -156,19 +156,19 @@
             "Id": "95739649-b89a-47bd-98fd-936f03f9be1f",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "95739649-b89a-47bd-98fd-936f03f9be1f",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 300
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 300,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -202,19 +202,19 @@
             "Id": "70c1529b-e8c8-4181-9f86-b9c3139477e8",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "70c1529b-e8c8-4181-9f86-b9c3139477e8",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 125
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 125,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -248,19 +248,19 @@
             "Id": "9ec21934-d39d-434e-8bea-a16fe410f2a3",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "9ec21934-d39d-434e-8bea-a16fe410f2a3",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 300
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 300,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -294,19 +294,19 @@
             "Id": "19236105-f843-49c1-b184-52633ac5b80f",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "19236105-f843-49c1-b184-52633ac5b80f",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 125
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 125,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -340,19 +340,19 @@
             "Id": "1b210efb-6273-4231-947d-ca89b3922f2d",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "1b210efb-6273-4231-947d-ca89b3922f2d",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 12.5
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 12.5,
           "Size": 8,
           "Shift": 0,
           "Unit": "",
@@ -386,19 +386,19 @@
             "Id": "f5765a4d-d5d8-41dc-a718-b38dbbda8a3e",
             "SrcId": null,
             "DataRef": {
-              "Data": 0
+              "Data": -4
             }
           },
           "linkYGain": {
             "Id": "f5765a4d-d5d8-41dc-a718-b38dbbda8a3e",
             "SrcId": null,
             "DataRef": {
-              "Data": 1
+              "Data": 100
             }
           },
           "XOffset": 0,
-          "YOffset": 0,
-          "YGain": 1,
+          "YOffset": -4,
+          "YGain": 100,
           "Size": 16,
           "Shift": 0,
           "Unit": "",
@@ -424,7 +424,62 @@
       "Deltas": [],
       "Annotations": [],
       "DataMarkers": [],
-      "Watches": []
+      "Watches": [
+        {
+          "Expression": "Hmi.app.speedLevel",
+          "Device": "Hmi",
+          "Address": 0,
+          "Size": 8,
+          "Shift": 0,
+          "Display": 1,
+          "Value": 0
+        },
+        {
+          "Expression": "Hmi.app.running",
+          "Device": "Hmi",
+          "Address": 0,
+          "Size": 8,
+          "Shift": 0,
+          "Display": 1,
+          "Value": 0
+        },
+        {
+          "Expression": "Hmi.app.fault",
+          "Device": "Hmi",
+          "Address": 0,
+          "Size": 32,
+          "Shift": 0,
+          "Display": 2,
+          "Value": 0
+        },
+        {
+          "Expression": "Motor.motor.rpmCmd",
+          "Device": "Motor",
+          "Address": 0,
+          "Size": 16,
+          "Shift": 0,
+          "Display": 1,
+          "Value": 0
+        },
+        {
+          "Expression": "Motor.motor.faults",
+          "Device": "Motor",
+          "Address": 0,
+          "Size": 8,
+          "Shift": 0,
+          "Display": 2,
+          "Value": 0
+        },
+        {
+          "Expression": "Hmi.app_ms",
+          "Device": "Hmi",
+          "Address": 0,
+          "Size": 32,
+          "Shift": 0,
+          "Display": 1,
+          "Value": 0
+        }
+      ]
     }
   ]
 }

@@ -53,6 +53,11 @@ Un seul tracé `Fan` réunit tout, pour suivre la chaîne consigne → régulati
 prend un autre et l'affiche dans la console : corriger alors le device. L'axe de temps est juste même en vitesse « max » : les
 trames arrivent simplement plus vite.
 
+Échelles : 8 divisions, zéro en bas ; vitesses 0 à 2400 tr/min, `duty` 0 à 1000 ‰, batterie 0 à 100 %,
+température 0 à 80 °C. Watches : `app.speedLevel`, `app.running`, `app.fault`, `motor.rpmCmd`, `motor.faults`,
+`app_ms`. Écriture : `Hmi.app.speedLevel` (1 à 5) change la consigne sans toucher aux touches ; `app.running`
+à 1 démarre le ventilateur.
+
 Le terminal `UART_DEBUG` de l'IHM est aussi sur un port fixe : 47711.
 
 ## Annexe : debugger
