@@ -8,7 +8,7 @@ Une nouvelle fonctionnalité ajoute sa ligne dans la section de son outil.
 La section e2Sim est vérifiée par [tests/test_matrix.py](../tests/test_matrix.py) : chaque test et chaque chapitre
 cités existent (les selftests sont lus dans `E2SIM_ROOT/selftest`), chaque test porte une exigence. Les autres
 sections seront vérifiées de la même façon quand leur partie du projet existera
-([#11](https://github.com/laurentolive/fan-demo/issues)).
+([#11](https://github.com/laurentolive/fan-demo/issues/11)).
 
 Colonnes : fonctionnalité, où dans le projet, test, chapitre de la démo e2Sim ([demo/DEMO.md](../demo/DEMO.md)).
 
