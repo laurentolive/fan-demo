@@ -46,10 +46,11 @@ eScope, ou `eScope.exe demo\fan-host32.escope`. Ils contiennent trois devices, s
 | `Motor` | 47720 | endpoint eScope du host pour `fan_motor` |
 | `MotorEmbedded` | 47721 | eScope embarqué dans `fan_motor`, sur son UART relayée en TCP |
 
-Protocole V3, symboles GDB sur la DLL de la toolchain (`build/host32/…`), adresses 32 bits (64 bits pour
-`host64`), sampling 1 ms. Tracés : `motor.rpmMeas`, `motor.duty` (Motor et Embedded), `app.rpmTarget`,
-`app.rpmMeasured`, `app.batPercent`, `app.temp_dC` (HMI). Si un port est déjà pris, e2Sim en prend un autre et
-l'affiche dans la console : corriger alors le device. L'axe de temps est juste même en vitesse « max » : les
+Un seul tracé `Fan` réunit tout, pour suivre la chaîne consigne → régulation → mesure : `app.rpmTarget`,
+`app.rpmMeasured` (HMI), `motor.rpmMeas`, `motor.duty` (Motor), les mêmes vus par l'eScope embarqué
+(`embedded.motor.…`), `app.batPercent`, `app.temp_dC`. Protocole V3, symboles GDB sur la DLL de la toolchain
+(`build/host32/…`), adresses 32 bits (64 bits pour `host64`), sampling 1 ms. Si un port est déjà pris, e2Sim en
+prend un autre et l'affiche dans la console : corriger alors le device. L'axe de temps est juste même en vitesse « max » : les
 trames arrivent simplement plus vite.
 
 Le terminal `UART_DEBUG` de l'IHM est aussi sur un port fixe : 47711.
