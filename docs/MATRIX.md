@@ -47,6 +47,7 @@ Colonnes : fonctionnalité, où dans le projet, test, chapitre de la démo e2Sim
 | Rapport Excel exigences → tests | `pytest --e2sim-xlsx` | selftest (test_report_statuses) | — |
 | Double architecture | campagne en `host32` et `host64` (Windows), `linux32` et `linux64` (Linux) | CI (test-all) | — |
 | Linux et sanitizers (ASan, UBSan, LSan) | campagne complète en `linux64-asan` ; débordement volontaire du firmware de selftest | selftest (test_sanitizer_report) | — |
+| Version d'API vérifiée (firmware ↔ runner ↔ host) | `e2sim_fw.c` compilé dans chaque firmware ; majeur différent refusé | selftest (test_api_version_refused) | — |
 | Debug VS Code | `launch` sur un firmware, breakpoint conservé après reset | manuel | annexe du guide |
 | Licence | dialogues, bandeau de la GUI, propriété JUnit | selftest (test_license_demonstration) | toute la démo |
 
