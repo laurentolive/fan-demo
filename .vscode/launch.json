@@ -22,7 +22,25 @@
                     "text": "set breakpoint pending on"
                 }
             ],
-            "preLaunchTask": "debug host32"
+            "preLaunchTask": "build host32"
+        },
+        {
+            "name": "e2sim GUI (host32)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/.tools/e2Sim/e2sim_cli.py",
+            "args": [
+                "gui",
+                "sim/hmi.board.yaml",
+                "--toolchain",
+                "host32",
+                "--connect",
+                "47600",
+                "--power-on"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true
         },
         {
             "name": "fan_hmi (host64)",
@@ -45,7 +63,25 @@
                     "text": "set breakpoint pending on"
                 }
             ],
-            "preLaunchTask": "debug host64"
+            "preLaunchTask": "build host64"
+        },
+        {
+            "name": "e2sim GUI (host64)",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/.tools/e2Sim/e2sim_cli.py",
+            "args": [
+                "gui",
+                "sim/hmi.board.yaml",
+                "--toolchain",
+                "host64",
+                "--connect",
+                "47600",
+                "--power-on"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "justMyCode": true
         },
         {
             "name": "attach to a runner (host32)",
@@ -55,6 +91,24 @@
             "processId": "${command:pickProcess}",
             "MIMode": "gdb",
             "miDebuggerPath": "C:/Dev/Tools/msys64/mingw32/bin/gdb.exe"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "fan_hmi + GUI (host32)",
+            "configurations": [
+                "e2sim GUI (host32)",
+                "fan_hmi (host32)"
+            ],
+            "stopAll": true
+        },
+        {
+            "name": "fan_hmi + GUI (host64)",
+            "configurations": [
+                "e2sim GUI (host64)",
+                "fan_hmi (host64)"
+            ],
+            "stopAll": true
         }
     ]
 }

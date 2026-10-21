@@ -62,8 +62,8 @@ Le terminal `UART_DEBUG` de l'IHM est aussi sur un port fixe : 47711.
 
 ## Annexe : debugger
 
-Dans VS Code (dossier racine de fan-demo) : configuration **fan_hmi (host32)** ou **(host64)**, F5. La tâche
-**debug host32** compile, lance la GUI qui attend le firmware sur le port 47600, puis le debugger démarre le
-firmware : la page s'ouvre. La GUI s'arrête avec la session de debug. Poser un breakpoint
+Dans VS Code (dossier racine de fan-demo) : configuration **fan_hmi + GUI (host32)** ou **(host64)**, F5 : compile,
+lance la GUI (port 47600) et le firmware sous gdb, dans n'importe quel ordre (le runner attend la GUI) ; la page
+s'ouvre. Shift+F5 arrête les deux. Poser un breakpoint
 dans `sensor_Process()`, puis cocher le paramètre `stuck_busy` du capteur dans la page (chapitre 8) : le reset
 watchdog recharge le firmware dans le même process et le breakpoint est toujours là.
