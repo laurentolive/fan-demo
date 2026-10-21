@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import threading
 import time
@@ -21,8 +22,8 @@ import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[2]
-sys.path.insert(0, str(ROOT))
+ROOT = HERE.parent
+sys.path.insert(0, os.environ.get("E2SIM_ROOT") or str(ROOT / ".tools" / "e2Sim"))
 
 from e2sim.gui import Gui  # noqa: E402
 from e2sim.sim import Sim, replay  # noqa: E402

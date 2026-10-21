@@ -1,0 +1,15 @@
+# Versions of the eSquareSoft tools validated together with this project (configuration management).
+#   python tools/fetch.py              fetch these versions into .tools/
+#   python tools/fetch.py --next       default branch of every tool (CI voice "next")
+# A tag suite-<suite> of fan-demo certifies this combination. The CI voice "next" proposes the update of this file
+# by a pull request when it passes. ref: tag when the tool has releases, else a commit.
+#   fetch: git      shallow clone at ref into .tools/<dir> (needed to build or test)
+#   fetch: release  asset of the GitHub release <ref> into .tools/<dir>
+#   fetch: record   version recorded only (tool used by hand, e.g. an installer)
+suite: 0.1.0
+tools:
+  e2sim:   {repo: laurentolive/e2Sim,   fetch: git,     ref: aa7a9e5bc63357696d0c4713d178ae73cc5adde2, branch: master, dir: e2Sim}
+  e2unit:  {repo: laurentolive/e2Unit,  fetch: git,     ref: e16892657f680df8441c72e279415504b4dbdb13, branch: master, dir: e2Unit, optional: true}
+  escope:  {repo: laurentolive/eScope,  fetch: release, ref: v1.1.1, asset: "eScope_*_win-x64.zip", dir: eScope, optional: true}
+  polenta: {repo: laurentolive/polenta, fetch: record,  ref: v0.1.2}
+  e2hil:   {repo: laurentolive/e2HIL,   fetch: git,     ref: df32c8afefe7bb5ac214b0c34310e028d8fdf478, branch: master, dir: e2HIL, optional: true}

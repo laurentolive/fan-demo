@@ -1,0 +1,157 @@
+# fan-demo CI (docs/PLAN.md §6-7)
+#   pinned: tools at the versions of tools.lock.yaml; must always pass
+#   next:   main branch of every tool; failure does not fail the run, success at night proposes a lock update
+#   repository_dispatch tool-release {tool, ref}: the pinned voice with that tool at that ref
+name: ci
+
+on:
+  push:
+    branches: [main]
+    tags: ["suite-*"]
+  pull_request:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [tool-release]
+  schedule:
+    - cron: "0 3 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  sim:
+    name: e2Sim campaign (${{ matrix.voice }})
+    runs-on: windows-latest
+    continue-on-error: ${{ matrix.voice == 'next' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        voice: [pinned, next]
+    env:
+      E2SIM_NO_DIALOG: "1"
+      E2SIM_LICENSE_KEY: ${{ secrets.E2SIM_LICENSE_KEY }}
+      E2SIM_TOOLCHAINS: ${{ github.workspace }}/e2sim_toolchains.yaml
+      VOICE: ${{ matrix.voice }}
+      RELEASE_TOOL: ${{ github.event.client_payload.tool }}
+      RELEASE_REF: ${{ github.event.client_payload.ref }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        id: py
+        with:
+          python-version: "3.12"
+
+      - uses: msys2/setup-msys2@v2
+        id: msys2
+        with:
+          msystem: MINGW32
+          update: false
+          install: >-
+            mingw-w64-i686-gcc mingw-w64-i686-gdb
+            mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-gdb
+
+      - name: GNU make, Python packages
+        shell: pwsh
+        run: |
+          choco install make -y --no-progress
+          python -m pip install --quiet pyyaml pytest openpyxl
+
+      - name: Fetch the tools
+        shell: pwsh
+        run: |
+          $a = @()
+          if ($env:VOICE -eq 'next') { $a += '--next' }
+          if ($env:RELEASE_TOOL) { $a += '--set'; $a += "$($env:RELEASE_TOOL)=$($env:RELEASE_REF)" }
+          python tools/fetch.py @a
+
+      - name: e2sim_toolchains.yaml
+        shell: pwsh
+        run: |
+          $m  = '${{ steps.msys2.outputs.msys2-location }}' -replace '\\', '/'
+          $py = '${{ steps.py.outputs.python-path }}' -replace '\\', '/'
+          @"
+          python: $py
+          toolchains:
+            host32: {arch: i686, prefix: $m/mingw32/bin/, path: [$m/mingw32/bin]}
+            host64: {arch: x86_64, prefix: $m/ucrt64/bin/, path: [$m/ucrt64/bin]}
+          default: host32
+          "@ | Set-Content $env:E2SIM_TOOLCHAINS -Encoding utf8NoBOM
+          Get-Content $env:E2SIM_TOOLCHAINS
+
+      - name: Build
+        shell: pwsh
+        run: |
+          make TOOLCHAIN=host32
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          make TOOLCHAIN=host64
+
+      - name: e2Sim campaign host32 (+ record)
+        shell: pwsh
+        run: python -m pytest tests -q --e2sim-toolchain host32 --junitxml=out/junit/sim32.xml --e2sim-record out/rec32
+
+      - name: e2Sim campaign host64
+        shell: pwsh
+        run: python -m pytest tests -q --e2sim-toolchain host64 --junitxml=out/junit/sim64.xml
+
+      - name: Demonstration as a test
+        shell: pwsh
+        run: make demo-check
+
+      - name: Coverage of the firmwares
+        if: matrix.voice == 'pinned'
+        shell: pwsh
+        run: make coverage TOOLCHAIN=host32 PYTEST_OPTS="-q"
+
+      - name: Lock proposal
+        if: matrix.voice == 'next'
+        shell: pwsh
+        run: |
+          python tools/fetch.py --write-lock
+          Copy-Item tools.lock.yaml out/tools.lock.next.yaml
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: results-${{ matrix.voice }}
+          path: |
+            .tools/resolved.yaml
+            out/junit/
+            out/rec32/*.e2simrec
+            out/coverage/
+            out/tools.lock.next.yaml
+            tests/ref/*.actual.png
+          if-no-files-found: ignore
+          include-hidden-files: true
+
+  lock-update:
+    name: Propose the lock update
+    needs: sim
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: results-next
+          path: next
+      - name: Next voice passed?
+        id: next
+        run: |
+          if [ -f next/out/tools.lock.next.yaml ] && ! grep -q -E 'failures="[1-9]|errors="[1-9]' next/out/junit/*.xml \
+             && [ "$(ls next/out/junit/*.xml | wc -l)" -ge 2 ]; then
+            cp next/out/tools.lock.next.yaml tools.lock.yaml
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: peter-evans/create-pull-request@v6
+        if: steps.next.outputs.ok == 'true'
+        with:
+          branch: bot/tools-lock
+          title: "tools.lock.yaml: tool versions that pass the next voice"
+          commit-message: "tools.lock.yaml: tool versions that pass the next voice"
+          body: |
+            The CI voice "next" (main branch of every tool) passed: these are the commits it tested.
+            Merge to make them the pinned versions; tag `suite-<version>` to certify the combination.

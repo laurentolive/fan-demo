@@ -1,7 +1,8 @@
-"""The coverage matrix of the spec (§16.3) is true: every test and demo chapter it cites exists, every test of
-the example carries a requirement (the example project tests every feature of e2Sim)."""
+"""The e2Sim section of the coverage matrix (docs/MATRIX.md) is true: every test and demo chapter it cites
+exists, every test of the project carries a requirement (fan-demo tests every feature of e2Sim)."""
 
 import ast
+import os
 import re
 import sys
 from pathlib import Path
@@ -9,13 +10,15 @@ from pathlib import Path
 import e2sim
 
 HERE = Path(__file__).parent
-ROOT = HERE.parents[2]
-SPEC = ROOT / "docs" / "SPEC.md"
+ROOT = HERE.parent
+MATRIX = ROOT / "docs" / "MATRIX.md"
+E2SIM_ROOT = Path(os.environ.get("E2SIM_ROOT") or ROOT / ".tools" / "e2Sim")
 
 
 def matrix_rows():
-    text = SPEC.read_text(encoding="utf-8")
-    section = text[text.index("### 16.3"):text.index("### 16.4")]
+    text = MATRIX.read_text(encoding="utf-8")
+    start = text.index("\n## e2Sim")
+    section = text[start:text.index("\n## ", start + 1)]
     rows = [r for r in section.splitlines() if r.startswith("|") and not r.startswith("|---")][1:]
     return [[c.strip() for c in r.strip("|").split("|")] for r in rows]
 
@@ -40,20 +43,20 @@ def expand(cell: str, prefix: str) -> list[int]:
 @e2sim.requirement("E2SIM-MATRIX-01")
 def test_matrix_tests_exist():
     tests = _functions(HERE)
-    selftests = _functions(ROOT / "selftest")
+    selftests = _functions(E2SIM_ROOT / "selftest")
     numbers = {int(m.group(1)) for n in tests if (m := re.match(r"test_t(\d+)_", n))}
     rows = matrix_rows()
     assert len(rows) >= 20
     for feature, where, cell, demo in rows:
         assert cell, f"{feature}: no test"
         for n in expand(cell, "T"):
-            assert n in numbers, f"{feature}: test T{n:02d} not found in examples/fan/tests"
+            assert n in numbers, f"{feature}: test T{n:02d} not found in tests/"
         for name in re.findall(r"selftest \((\w+)\)", cell):
             assert name in selftests, f"{feature}: selftest {name} not found"
         if "GUI" in cell:
             assert "test_gui_api" in tests
         if "test-all" in cell:
-            assert "test-all:" in (HERE.parent / "Makefile").read_text(encoding="utf-8")
+            assert "test-all:" in (ROOT / "Makefile").read_text(encoding="utf-8")
         known = expand(cell, "T") or re.search(r"tous|selftest \(|GUI|test-all|manuel", cell)
         assert known, f"{feature}: test reference not understood: {cell!r}"
 

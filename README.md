@@ -1,43 +1,48 @@
-# Projet exemple : ventilateur sur batterie
+# fan-demo
 
-Firmware original écrit pour e2Sim (spec §16), avec deux buts :
+**English** | [Français](README.fr.md)
 
-1. **tester l'ensemble des fonctionnalités** d'e2Sim : `make test-all` (chaque fonctionnalité a son test,
-   matrice de couverture en spec §16.3) ;
-2. **en faire la démonstration** : `make demo`, scénario commenté en 10 chapitres dans la GUI web, guide
-   [demo/DEMO.md](demo/DEMO.md). La démo est elle-même testée (`make demo-check`).
+A two-board battery fan that is the **integration test and the demonstration of every eSquareSoft tool**:
+[Polenta](https://github.com/laurentolive/polenta) (requirements), [e2Unit](https://github.com/laurentolive/e2Unit)
+(unit tests), [e2Sim](https://github.com/laurentolive/e2Sim) (PC simulation),
+[eScope](https://github.com/laurentolive/eScope) (observation), [e2HIL](https://github.com/laurentolive/e2HIL)
+(real bench).
 
-C'est aussi le modèle de portage d'un firmware.
+- **HMI board** `fan_hmi` on a Renesas **FPB-RA4E1** (Cortex-M33, J-Link): buttons, display, SPI temperature
+  sensor, battery, settings in NVM, watchdog.
+- **Motor board** `fan_motor` on an **Arduino Nano Every** (8-bit AVR, serial): 4-wire PC fan, PI speed control
+  on the tachometer, protections, embedded eScope.
+- The boards talk over a UART (frames with CRC). The application code is the same in simulation and on target.
 
-**Carte IHM `fan_hmi`** : verrou d'alimentation (`SELF_HOLD`), 3 touches, écran 128×64 RGB565, capteur de
-température SPI, batterie sur ADC, carte moteur sur UART (protocole à CRC), réglages en NVM, watchdog.
-
-| Touche | Action |
+| Documents | |
 |---|---|
-| POWER (appui court) | ventilateur marche / arrêt |
-| POWER (2 s) | sauvegarde, puis coupure quand la touche est relâchée |
-| PLUS / MINUS | vitesse 1 à 5 |
+| [Project plan](docs/PLAN.md) (French) | hardware, layout, demo storyline, configuration management, CI, phases |
+| [Coverage matrix](docs/MATRIX.md) (French) | every feature of every tool → where, test, demo |
+| [e2Sim demo guide](demo/DEMO.md) | chapter by chapter |
+| [Issues](https://github.com/laurentolive/fan-demo/issues) | work in progress |
+
+Status: the simulation part (e2Sim) is complete; the real-board ports, the e2Unit suites, the Polenta project
+and the bench are coming (see the plan).
+
+## Quick start
+
+Requirements: those of e2Sim (Windows, Python 3.10+ with `pyyaml` and `pytest`, GNU make, MSYS2 mingw32 / ucrt64
+gcc and gdb, an `e2sim_toolchains.yaml`); see the e2Sim README.
 
 ```
-hal/          HAL d'exemple (en-têtes génériques)
-hal_e2sim/    adaptateur de la HAL sur e2sim.h  ← modèle à recopier
-common/       protocole IHM ↔ moteur, CRC
-escope/       code cible eScope V3 (copie, MIT), embarqué par fan_motor sur UART_SCOPE
-fan_hmi/      application IHM (main() superloop) ; halCfg.h : ressources HAL de la carte
-sim/          hmi.board.yaml + modèles Python (Battery, TempSensor, MotorBoard)
-tests/        tests pytest T00..T15 + démo + images de référence
-demo/         démo : demo.py (chapitres) et DEMO.md (guide)
+python tools/fetch.py   # tools at the versions of tools.lock.yaml, into .tools/
+make test-all           # e2Sim campaign on host32 and host64
+make demo               # demonstration in the web GUI
+make demo-check         # the demonstration as a test
+make E2SIM_ROOT=../e2Sim test   # against a working copy of e2Sim
 ```
 
-```
-make test          # toolchain par défaut
-make test-all      # host32 et host64 (mêmes références d'écran)
-make demo          # démonstration dans la GUI
-make demo-check    # la démo en test
-make coverage      # couverture des firmwares par la campagne : out/coverage/index.html
-```
+## Tool versions
 
-**Carte moteur `fan_motor`** : régulation PI de vitesse sur tachymètre, PWM, comparateur de courant sur
-interruption externe, surintensité logicielle, rotor bloqué. `sim/system.yaml` simule les deux cartes : le
-firmware moteur remplace alors le modèle `MotorBoard`. Il embarque aussi eScope sur `UART_SCOPE`, relayée en
-TCP par e2Sim ; sa configuration PC est [hal_e2sim/eScopeCfg.h](hal_e2sim/eScopeCfg.h).
+[`tools.lock.yaml`](tools.lock.yaml) pins the tool versions validated together; a `suite-<version>` tag of this
+repository certifies a combination. The CI also runs the project against the main branch of every tool and
+proposes the update of the file by a pull request.
+
+## License
+
+MIT ([LICENSE.md](LICENSE.md)). The tools have their own licenses.

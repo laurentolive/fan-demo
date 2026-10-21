@@ -3,7 +3,7 @@
 Durée : 15 à 20 minutes. Prérequis : `make` (les deux firmwares), un navigateur, et eScope pour le chapitre 3.
 
 ```
-cd examples/fan
+python tools/fetch.py           # outils aux versions de tools.lock.yaml
 make demo                       # interactif : Entrée avant chaque chapitre, temps réel
 make demo DEMO_OPTS="--auto"    # chapitres enchaînés (stand, boucle)
 make demo-check                 # la même démo en test, accélérée, sans navigateur
@@ -44,6 +44,6 @@ même en vitesse « max » : les trames arrivent simplement plus vite.
 
 ## Annexe : debugger
 
-Dans VS Code (dossier `examples/fan`) : tâche **e2sim connect**, puis configuration **fan_hmi (host32)**.
+Dans VS Code (dossier racine de fan-demo) : tâche **e2sim connect**, puis configuration **fan_hmi (host32)**.
 Poser un breakpoint dans `sensor_Process()`, déclencher le chapitre 8 depuis la page : le reset watchdog
 recharge le firmware et le breakpoint est toujours là.
