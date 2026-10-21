@@ -15,6 +15,7 @@ class Client:
     def __init__(self, sim, port):
         self.sim = sim
         self.sock = socket.create_connection(("127.0.0.1", port))
+        self.sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)  # no Nagle: each command sent at once
         self.sock.settimeout(0.05)
         self.buf = bytearray()
         sim.run(ms=2)  # connection seen at a quantum boundary
@@ -38,6 +39,11 @@ class Client:
 
     def close(self):
         self.sock.close()
+
+
+def unmapped(inst) -> int:
+    """Link address of the process address 8 (never mapped), wherever the firmware is loaded."""
+    return inst.inst.unrelocate(8)
 
 
 def addr(sim, expr):
@@ -90,13 +96,20 @@ def test_t14_escope_write_oneshot_errors(sim):
     frames = c.frames()
     assert frames and frames[-1][2] == bytes([sim.var("app.batPercent")])
 
-    c.send(command(CMD_READ_PERIODIC, 0x8, 2, asz))  # unmapped address: refused, no crash
+    bad = unmapped(st)
+    c.send(command(CMD_READ_PERIODIC, bad, 2, asz))  # unmapped address: refused, no crash
     sim.run(ms=10)
     errors = [f for f in c.frames() if f[1] == ERR_ADDR]
     assert len(errors) >= 5, "error frame repeated until CMD_CLEAR"
-    assert errors[0][2] == (8).to_bytes(asz, "little") + bytes([2])
+    assert errors[0][2] == bad.to_bytes(asz, "little") + bytes([2])
 
     c.send(bytes([CMD_CLEAR]))
+    for _ in range(200):  # CLEAR handled before the next command (sent together, it would be dropped, as on target)
+        if st.escope.error is None:
+            break
+        time.sleep(0.01)
+        sim.step()
+    assert st.escope.error is None
     other = 8 if asz == 4 else 4
     c.send(command(CMD_READ_PERIODIC, a_bat, 1, other))  # address size of the other architecture
     sim.run(ms=5)
@@ -159,7 +172,7 @@ def test_t15_escope_embedded_in_the_firmware(e2sim_toolchain, tmp_path):
 
         c.send(bytes([CMD_CLEAR]))
         sim.run(ms=5)
-        c.send(command(CMD_READ_PERIODIC, 0x8, 2, asz))  # refused by ESCOPE_ADDR_IS_VALID (e2sim_mem_valid)
+        c.send(command(CMD_READ_PERIODIC, unmapped(motor), 2, asz))  # refused by ESCOPE_ADDR_IS_VALID
         sim.run(ms=10)
         assert any(f[1] == ERR_ADDR for f in c.frames()), "ERR_ADDR from the firmware, no crash"
         assert not motor.resets[1:], "the firmware did not reset"

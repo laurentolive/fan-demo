@@ -3,7 +3,7 @@
 #   make                       default toolchain of e2sim_toolchains.yaml
 #   make TOOLCHAIN=host64      other toolchain
 #   make test                  build + pytest, TOOLCHAIN as above
-#   make test-all              build + pytest on host32 and host64
+#   make test-all              build + pytest on both architectures (host32 host64, linux32 linux64)
 #   make demo                  demonstration in the GUI, chapter by chapter (DEMO_OPTS="--auto")
 #   make demo-check            the demonstration as a test: fast, no browser
 #################################
@@ -43,11 +43,17 @@ demo: all
 demo-check: all
 	@"$(E2SIM_PY)" demo/demo.py --check --toolchain $(E2SIM_TC)
 
-test-all:  # both builds first: some tests replay a record on the other architecture
-	@$(MAKE) --no-print-directory all TOOLCHAIN=host32
-	@$(MAKE) --no-print-directory all TOOLCHAIN=host64
-	@$(MAKE) --no-print-directory test TOOLCHAIN=host32
-	@$(MAKE) --no-print-directory test TOOLCHAIN=host64
+# both architectures of the platform; all the builds first: some tests replay a record on the other one
+TOOLCHAINS ?= $(if $(E2SIM_WIN),host32 host64,linux32 linux64)
+
+define each_toolchain
+	@$(MAKE) --no-print-directory $(1) TOOLCHAIN=$(2)
+
+endef
+
+test-all:
+	$(foreach t,$(TOOLCHAINS),$(call each_toolchain,all,$(t)))
+	$(foreach t,$(TOOLCHAINS),$(call each_toolchain,test,$(t)))
 
 clean:
 	@$(E2SIM) fs rm $(BUILD) out

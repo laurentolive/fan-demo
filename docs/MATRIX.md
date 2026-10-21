@@ -45,7 +45,8 @@ Colonnes : fonctionnalité, où dans le projet, test, chapitre de la démo e2Sim
 | eScope embarqué + relais TCP d'un stream | `fan_motor` sur `UART_SCOPE` ; `UART_DEBUG` en terminal TCP | T15 | 3 |
 | GUI web générée, API JSON, image du produit (`gui: skin`) | `system.yaml`, face avant de l'IHM | GUI | toute la démo |
 | Rapport Excel exigences → tests | `pytest --e2sim-xlsx` | selftest (test_report_statuses) | — |
-| Double architecture | campagne en `host32` et `host64` | CI (test-all) | — |
+| Double architecture | campagne en `host32` et `host64` (Windows), `linux32` et `linux64` (Linux) | CI (test-all) | — |
+| Linux et sanitizers (ASan, UBSan, LSan) | campagne complète en `linux64-asan` ; débordement volontaire du firmware de selftest | selftest (test_sanitizer_report) | — |
 | Debug VS Code | `launch` sur un firmware, breakpoint conservé après reset | manuel | annexe du guide |
 | Licence | dialogues, bandeau de la GUI, propriété JUnit | selftest (test_license_demonstration) | toute la démo |
 
