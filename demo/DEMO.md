@@ -62,6 +62,7 @@ Le terminal `UART_DEBUG` de l'IHM est aussi sur un port fixe : 47711.
 
 ## Annexe : debugger
 
-Dans VS Code (dossier racine de fan-demo) : tâche **e2sim connect**, puis configuration **fan_hmi (host32)**.
-Poser un breakpoint dans `sensor_Process()`, déclencher le chapitre 8 depuis la page : le reset watchdog
-recharge le firmware et le breakpoint est toujours là.
+Dans VS Code (dossier racine de fan-demo) : tâche **e2sim connect** (la GUI attend le firmware sur le port 47600),
+puis configuration **fan_hmi (host32)** (F5) : la page s'ouvre quand le firmware se connecte. Poser un breakpoint
+dans `sensor_Process()`, puis cocher le paramètre `stuck_busy` du capteur dans la page (chapitre 8) : le reset
+watchdog recharge le firmware dans le même process et le breakpoint est toujours là.
