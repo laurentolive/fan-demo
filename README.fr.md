@@ -47,7 +47,7 @@ et propose la mise à jour du fichier. Détails : [plan §6](docs/PLAN.md#6-gest
 
 | Suite | e2Sim | e2Unit | eScope | Polenta | e2HIL |
 |---|---|---|---|---|---|
-| 0.1.0 (en cours) | `aa7a9e5` | `e168926` | v1.1.1 | v0.1.2 | `df32c8a` |
+| 0.1.0 (en cours) | `aa7a9e5` | `e168926` | v1.2.0 | v0.1.2 | `df32c8a` |
 
 ## Arborescence
 

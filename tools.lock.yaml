@@ -10,6 +10,6 @@ suite: 0.1.0
 tools:
   e2sim:   {repo: laurentolive/e2Sim,   fetch: git,     ref: aa7a9e5bc63357696d0c4713d178ae73cc5adde2, branch: master, dir: e2Sim}
   e2unit:  {repo: laurentolive/e2Unit,  fetch: git,     ref: e16892657f680df8441c72e279415504b4dbdb13, branch: master, dir: e2Unit, optional: true}
-  escope:  {repo: laurentolive/eScope,  fetch: release, ref: v1.1.1, asset: "eScope_*_win-x64.zip", dir: eScope, optional: true}
+  escope:  {repo: laurentolive/eScope,  fetch: release, ref: v1.2.0, asset: "eScope_*_win-x64.zip", dir: eScope, optional: true}
   polenta: {repo: laurentolive/polenta, fetch: record,  ref: v0.1.2}
   e2hil:   {repo: laurentolive/e2HIL,   fetch: git,     ref: df32c8afefe7bb5ac214b0c34310e028d8fdf478, branch: master, dir: e2HIL, optional: true}
