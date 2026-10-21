@@ -16,15 +16,54 @@
             "problemMatcher": "$gcc"
         },
         {
-            "label": "e2sim connect",
-            "detail": "GUI waiting for the firmware launched by the debugger, real time",
+            "label": "e2sim connect host32",
+            "detail": "GUI waiting for the firmware launched by the debugger (ends with the debug session)",
             "type": "shell",
-            "command": "python .tools/e2Sim/e2sim_cli.py gui sim/hmi.board.yaml --connect 47600 --power-on",
+            "command": "python .tools/e2Sim/e2sim_cli.py gui sim/hmi.board.yaml --toolchain host32 --connect 47600 --power-on",
             "isBackground": true,
             "problemMatcher": {
-                "pattern": { "regexp": "^x^" },
-                "background": { "activesBegin": "^e2sim: waiting", "endsPattern": "^e2sim: waiting" }
+                "pattern": {
+                    "regexp": "^x^"
+                },
+                "background": {
+                    "activesBegin": "^e2sim: waiting",
+                    "endsPattern": "^e2sim: waiting"
+                }
             }
+        },
+        {
+            "label": "debug host32",
+            "detail": "build, then the GUI waiting for the firmware (F5 preLaunchTask)",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "build host32",
+                "e2sim connect host32"
+            ]
+        },
+        {
+            "label": "e2sim connect host64",
+            "detail": "GUI waiting for the firmware launched by the debugger (ends with the debug session)",
+            "type": "shell",
+            "command": "python .tools/e2Sim/e2sim_cli.py gui sim/hmi.board.yaml --toolchain host64 --connect 47600 --power-on",
+            "isBackground": true,
+            "problemMatcher": {
+                "pattern": {
+                    "regexp": "^x^"
+                },
+                "background": {
+                    "activesBegin": "^e2sim: waiting",
+                    "endsPattern": "^e2sim: waiting"
+                }
+            }
+        },
+        {
+            "label": "debug host64",
+            "detail": "build, then the GUI waiting for the firmware (F5 preLaunchTask)",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "build host64",
+                "e2sim connect host64"
+            ]
         },
         {
             "label": "test",
