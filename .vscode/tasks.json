@@ -22,12 +22,14 @@
             "command": "python .tools/e2Sim/e2sim_cli.py gui sim/hmi.board.yaml --toolchain host32 --connect 47600 --power-on",
             "isBackground": true,
             "problemMatcher": {
+                "owner": "e2sim",
                 "pattern": {
                     "regexp": "^x^"
                 },
                 "background": {
-                    "beginsPattern": "^e2sim: waiting",
-                    "endsPattern": "^e2sim: waiting"
+                    "activeBegins": true,
+                    "beginsPattern": "^e2sim: never printed$",
+                    "endsPattern": "^e2sim: waiting for the firmware"
                 }
             }
         },
@@ -47,12 +49,14 @@
             "command": "python .tools/e2Sim/e2sim_cli.py gui sim/hmi.board.yaml --toolchain host64 --connect 47600 --power-on",
             "isBackground": true,
             "problemMatcher": {
+                "owner": "e2sim",
                 "pattern": {
                     "regexp": "^x^"
                 },
                 "background": {
-                    "beginsPattern": "^e2sim: waiting",
-                    "endsPattern": "^e2sim: waiting"
+                    "activeBegins": true,
+                    "beginsPattern": "^e2sim: never printed$",
+                    "endsPattern": "^e2sim: waiting for the firmware"
                 }
             }
         },
