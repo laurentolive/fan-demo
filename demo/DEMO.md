@@ -37,10 +37,22 @@ simulé en Python, au niveau des données de la HAL. Le temps est virtuel : tout
 
 ## eScope (chapitre 3)
 
-Ajouter un device eScope : transport `TCP:127.0.0.1,<port affiché>`, protocole V3, symboles GDB sur
-`build/host32/fan_motor.dll` (ou `fan_hmi.dll`), « Addresses : 32 bits » (64 bits pour `host64`), sampling time
-1 ms. Variables : `motor.rpmMeas`, `motor.duty`, `motor.current_mA`, `app.speedLevel`. L'axe de temps est juste
-même en vitesse « max » : les trames arrivent simplement plus vite.
+Workspaces prêts : ouvrir `demo/fan-host32.escope` (ou `fan-host64.escope` pour `make TOOLCHAIN=host64`) dans
+eScope, ou `eScope.exe demo\fan-host32.escope`. Ils contiennent trois devices, sur les ports fixes des `board.yaml` :
+
+| Device | Port | Rôle |
+|---|---|---|
+| `Hmi` | 47710 | endpoint eScope du host pour `fan_hmi` |
+| `Motor` | 47720 | endpoint eScope du host pour `fan_motor` |
+| `MotorEmbedded` | 47721 | eScope embarqué dans `fan_motor`, sur son UART relayée en TCP |
+
+Protocole V3, symboles GDB sur la DLL de la toolchain (`build/host32/…`), adresses 32 bits (64 bits pour
+`host64`), sampling 1 ms. Tracés : `motor.rpmMeas`, `motor.duty` (Motor et Embedded), `app.rpmTarget`,
+`app.rpmMeasured`, `app.batPercent`, `app.temp_dC` (HMI). Si un port est déjà pris, e2Sim en prend un autre et
+l'affiche dans la console : corriger alors le device. L'axe de temps est juste même en vitesse « max » : les
+trames arrivent simplement plus vite.
+
+Le terminal `UART_DEBUG` de l'IHM est aussi sur un port fixe : 47711.
 
 ## Annexe : debugger
 

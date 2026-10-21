@@ -12,8 +12,10 @@ ports:
   CURRENT_ADC: { class: ADC,     idx: HAL_ADC_CURRENT,      type: value, dir: in }
   FAULT_IN:    { class: EVENT,   idx: HAL_EXTI_OVERCURRENT, type: event, dir: in }
   UART_LINK:   { class: UART,    idx: HAL_UART_LINK,        type: stream }
-  UART_SCOPE:  { class: UART,    idx: HAL_UART_SCOPE,       type: stream, tcp: 0 }   # eScope embedded in the firmware
+  UART_SCOPE:  { class: UART,    idx: HAL_UART_SCOPE,       type: stream, tcp: 47721 }   # eScope embedded in the firmware
 
 models:
   - class: models.motor.Motor
     ports: { pwm: PWM_MOTOR, tacho: TACHO, current: CURRENT_ADC, comparator: FAULT_IN }
+
+escope: { port: 47720 }               # fixed: the eScope workspaces of demo/

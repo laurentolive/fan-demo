@@ -1,0 +1,464 @@
+{
+  "Devices": [
+    {
+      "Name": "Hmi",
+      "Com": "TCP:127.0.0.1,47710",
+      "SymbolFilePath": "..\\build\\host64\\fan_hmi.dll",
+      "GdbFilePath": "",
+      "MapRegex": "",
+      "Protocol": "V3",
+      "SymbolType": "gdb",
+      "SamplingTime": 1,
+      "V1ChannelMax": 4,
+      "V1DataSize": 16,
+      "AddressSize": 8
+    },
+    {
+      "Name": "Motor",
+      "Com": "TCP:127.0.0.1,47720",
+      "SymbolFilePath": "..\\build\\host64\\fan_motor.dll",
+      "GdbFilePath": "",
+      "MapRegex": "",
+      "Protocol": "V3",
+      "SymbolType": "gdb",
+      "SamplingTime": 1,
+      "V1ChannelMax": 4,
+      "V1DataSize": 16,
+      "AddressSize": 8
+    },
+    {
+      "Name": "MotorEmbedded",
+      "Com": "TCP:127.0.0.1,47721",
+      "SymbolFilePath": "..\\build\\host64\\fan_motor.dll",
+      "GdbFilePath": "",
+      "MapRegex": "",
+      "Protocol": "V3",
+      "SymbolType": "gdb",
+      "SamplingTime": 1,
+      "V1ChannelMax": 4,
+      "V1DataSize": 16,
+      "AddressSize": 8
+    }
+  ],
+  "Traces": [
+    {
+      "Name": "Motor",
+      "XPos": 0,
+      "XWidth": 5000,
+      "XGridDecadeNb": 100,
+      "XGridDecadeVal": 1,
+      "LegendWidth": 140,
+      "DarkMode": 0,
+      "signalNb": 2,
+      "Channels": [
+        {
+          "Id": "1dbbd5fd-6091-470a-b454-12531c8c5af6",
+          "linkXOffset": {
+            "Id": "1dbbd5fd-6091-470a-b454-12531c8c5af6",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "1dbbd5fd-6091-470a-b454-12531c8c5af6",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "1dbbd5fd-6091-470a-b454-12531c8c5af6",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "Motor.motor.rpmMeas",
+          "Device": "Motor",
+          "Address": 0,
+          "Lost": [],
+          "Name": "motor.rpmMeas",
+          "Color": "#1F77B4"
+        },
+        {
+          "Id": "f1b9f816-3515-4ecb-85ed-7f42850ddeda",
+          "linkXOffset": {
+            "Id": "f1b9f816-3515-4ecb-85ed-7f42850ddeda",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "f1b9f816-3515-4ecb-85ed-7f42850ddeda",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "f1b9f816-3515-4ecb-85ed-7f42850ddeda",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "Motor.motor.duty",
+          "Device": "Motor",
+          "Address": 0,
+          "Lost": [],
+          "Name": "motor.duty",
+          "Color": "#FF7F0E"
+        }
+      ],
+      "Markers": [],
+      "Deltas": [],
+      "Annotations": [],
+      "DataMarkers": [],
+      "Watches": []
+    },
+    {
+      "Name": "HMI",
+      "XPos": 0,
+      "XWidth": 5000,
+      "XGridDecadeNb": 100,
+      "XGridDecadeVal": 1,
+      "LegendWidth": 140,
+      "DarkMode": 0,
+      "signalNb": 4,
+      "Channels": [
+        {
+          "Id": "a1a68b6b-9480-4b48-a8ff-16d1d51c218a",
+          "linkXOffset": {
+            "Id": "a1a68b6b-9480-4b48-a8ff-16d1d51c218a",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "a1a68b6b-9480-4b48-a8ff-16d1d51c218a",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "a1a68b6b-9480-4b48-a8ff-16d1d51c218a",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "Hmi.app.rpmTarget",
+          "Device": "Hmi",
+          "Address": 0,
+          "Lost": [],
+          "Name": "app.rpmTarget",
+          "Color": "#1F77B4"
+        },
+        {
+          "Id": "db7936c2-03b3-4d5f-9153-fa336d449223",
+          "linkXOffset": {
+            "Id": "db7936c2-03b3-4d5f-9153-fa336d449223",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "db7936c2-03b3-4d5f-9153-fa336d449223",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "db7936c2-03b3-4d5f-9153-fa336d449223",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "Hmi.app.rpmMeasured",
+          "Device": "Hmi",
+          "Address": 0,
+          "Lost": [],
+          "Name": "app.rpmMeasured",
+          "Color": "#FF7F0E"
+        },
+        {
+          "Id": "43c34336-ddb9-4008-ad37-fb38c1f0f003",
+          "linkXOffset": {
+            "Id": "43c34336-ddb9-4008-ad37-fb38c1f0f003",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "43c34336-ddb9-4008-ad37-fb38c1f0f003",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "43c34336-ddb9-4008-ad37-fb38c1f0f003",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 8,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "Hmi.app.batPercent",
+          "Device": "Hmi",
+          "Address": 0,
+          "Lost": [],
+          "Name": "app.batPercent",
+          "Color": "#2CA02C"
+        },
+        {
+          "Id": "e65b1349-20cd-42da-9e95-a7ae3c41a82e",
+          "linkXOffset": {
+            "Id": "e65b1349-20cd-42da-9e95-a7ae3c41a82e",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "e65b1349-20cd-42da-9e95-a7ae3c41a82e",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "e65b1349-20cd-42da-9e95-a7ae3c41a82e",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 0,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "Hmi.app.temp_dC",
+          "Device": "Hmi",
+          "Address": 0,
+          "Lost": [],
+          "Name": "app.temp_dC",
+          "Color": "#D62728"
+        }
+      ],
+      "Markers": [],
+      "Deltas": [],
+      "Annotations": [],
+      "DataMarkers": [],
+      "Watches": []
+    },
+    {
+      "Name": "Embedded eScope",
+      "XPos": 0,
+      "XWidth": 5000,
+      "XGridDecadeNb": 100,
+      "XGridDecadeVal": 1,
+      "LegendWidth": 140,
+      "DarkMode": 0,
+      "signalNb": 2,
+      "Channels": [
+        {
+          "Id": "1efd8387-36f6-4a6f-9119-4a801aa991e3",
+          "linkXOffset": {
+            "Id": "1efd8387-36f6-4a6f-9119-4a801aa991e3",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "1efd8387-36f6-4a6f-9119-4a801aa991e3",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "1efd8387-36f6-4a6f-9119-4a801aa991e3",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "MotorEmbedded.motor.rpmMeas",
+          "Device": "MotorEmbedded",
+          "Address": 0,
+          "Lost": [],
+          "Name": "motor.rpmMeas",
+          "Color": "#1F77B4"
+        },
+        {
+          "Id": "e17bf358-950c-4482-b71f-98411ed5a48f",
+          "linkXOffset": {
+            "Id": "e17bf358-950c-4482-b71f-98411ed5a48f",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYOffset": {
+            "Id": "e17bf358-950c-4482-b71f-98411ed5a48f",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 0
+            }
+          },
+          "linkYGain": {
+            "Id": "e17bf358-950c-4482-b71f-98411ed5a48f",
+            "SrcId": null,
+            "DataRef": {
+              "Data": 1
+            }
+          },
+          "XOffset": 0,
+          "YOffset": 0,
+          "YGain": 1,
+          "Size": 16,
+          "Shift": 0,
+          "Unit": "",
+          "XCreation": 0,
+          "X": [],
+          "UnitRatio": 1,
+          "Display": 1,
+          "IsVisible": true,
+          "hasDevice": true,
+          "SamplingTime": 1,
+          "hasFunction": false,
+          "Script": "return Y[i];",
+          "Y": [],
+          "Symbol": "MotorEmbedded.motor.duty",
+          "Device": "MotorEmbedded",
+          "Address": 0,
+          "Lost": [],
+          "Name": "motor.duty",
+          "Color": "#FF7F0E"
+        }
+      ],
+      "Markers": [],
+      "Deltas": [],
+      "Annotations": [],
+      "DataMarkers": [],
+      "Watches": []
+    }
+  ]
+}
